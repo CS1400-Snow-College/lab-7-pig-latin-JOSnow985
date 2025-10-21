@@ -3,13 +3,18 @@ Console.Clear();
 Console.WriteLine("Welcome to a little encoding program!");
 Console.WriteLine("We'll take a phrase from you and encode it with an offset, and into Pig Latin, just for fun!");
 Console.Write("Phrase to encode:  ");
+
+//Take the user's phrase and divide it into an array
 string userPhrase = Console.ReadLine();
 string[] phraseArray = userPhrase.Split(' ');
+
 //Dropping all words to lower case
 for (int index = 0; index < phraseArray.Length; index++)
 {
     phraseArray[index] = phraseArray[index].ToLower();
 }
+
+//Make a new array for Pig Latin so we aren't directly touching phraseArray
 string[] pigLatinArray = new string[phraseArray.Length];
 string vowels = "aeiou";
 for (int index = 0; index < phraseArray.Length; index++)
@@ -40,6 +45,7 @@ for (int index = 0; index < phraseArray.Length; index++)
         }
     }
 }
+
 Console.Write("In Pig Latin:  ");
 foreach (string word in pigLatinArray)
 {
@@ -47,6 +53,25 @@ foreach (string word in pigLatinArray)
 }
 Console.WriteLine();
 
+//Get a random number for our offset
 Random rng = new Random();
 int rngOffset = rng.Next(1, 26);
-Console.WriteLine("Randomly generated offset is: " + rngOffset);
+//Make a new array for the offset phrase
+string[] offsetArray = new string[pigLatinArray.Length];
+for (int index = 0; index < pigLatinArray.Length; index++)
+{
+    foreach (char letter in pigLatinArray[index])
+    {
+        char newCharacter = letter;
+        if ((letter + rngOffset) > 'z')
+            newCharacter = (char)(letter - 26);
+        offsetArray[index] = offsetArray[index] + (char)(newCharacter + rngOffset);
+    }
+}
+
+Console.Write("Encryped to:  ");
+foreach (string word in offsetArray)
+{
+    Console.Write(word + " ");
+}
+Console.WriteLine();
