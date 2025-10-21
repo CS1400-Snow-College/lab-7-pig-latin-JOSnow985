@@ -1,8 +1,8 @@
 ﻿// Jaden Olvera, 10-21-25, Lab 7 - Pig Latin / Encoder
 Console.Clear();
-Console.WriteLine("Welcome to a little encoding program!");
-Console.WriteLine("We'll take a phrase from you and encode it with an offset, and into Pig Latin, just for fun!");
-Console.Write("Phrase to encode:  ");
+Console.WriteLine("Welcome to a Pig Latin encoding program!");
+Console.WriteLine("You can input a phrase and we'll turn it into Pig Latin, then encrypt it with an offset!");
+Console.Write("Phrase to encode: ");
 
 //Take the user's phrase and divide it into an array
 string userPhrase = Console.ReadLine();
@@ -12,6 +12,26 @@ string[] phraseArray = userPhrase.Split(' ');
 for (int index = 0; index < phraseArray.Length; index++)
 {
     phraseArray[index] = phraseArray[index].ToLower();
+}
+
+//Checking for punctuation on the last word
+string sentenceEnders = "?!.";
+string punctuationToAdd = "";
+for (int index = phraseArray[^1].Length - 1; index >= 0; index--)
+{
+    if (sentenceEnders.Contains(phraseArray[^1][index]))
+    {
+        punctuationToAdd += phraseArray[^1][index];
+    }
+}
+
+//Check if we need to trim punctuation
+if (punctuationToAdd != "")
+{
+    foreach (char character in punctuationToAdd)
+    {
+        phraseArray[^1] = phraseArray[^1].TrimEnd(character);
+    }
 }
 
 //Make a new array for Pig Latin so we aren't directly touching phraseArray
@@ -46,16 +66,10 @@ for (int index = 0; index < phraseArray.Length; index++)
     }
 }
 
-Console.Write("In Pig Latin:  ");
-foreach (string word in pigLatinArray)
-{
-    Console.Write(word + " ");
-}
-Console.WriteLine();
-
 //Get a random number for our offset
 Random rng = new Random();
 int rngOffset = rng.Next(1, 26);
+
 //Make a new array for the offset phrase
 string[] offsetArray = new string[pigLatinArray.Length];
 for (int index = 0; index < pigLatinArray.Length; index++)
@@ -69,7 +83,24 @@ for (int index = 0; index < pigLatinArray.Length; index++)
     }
 }
 
-Console.Write("Encryped to:  ");
+//Add the punctuation back
+if (punctuationToAdd != "")
+{
+    for (int index = punctuationToAdd.Length - 1; index >= 0; index--)
+    {
+        pigLatinArray[^1] += punctuationToAdd[index];
+        offsetArray[^1] += punctuationToAdd[index];
+    }
+}
+
+Console.Write("In Pig Latin: ");
+foreach (string word in pigLatinArray)
+{
+    Console.Write(word + " ");
+}
+Console.WriteLine();
+Console.WriteLine($"Randomly chose {rngOffset} as an offset.");
+Console.Write($"Encrypted: ");
 foreach (string word in offsetArray)
 {
     Console.Write(word + " ");
