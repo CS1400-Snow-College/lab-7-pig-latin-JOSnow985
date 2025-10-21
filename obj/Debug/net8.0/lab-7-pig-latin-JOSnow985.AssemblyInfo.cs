@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lab-7-pig-latin-JOSnow985")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56bef6d874b6192ed8ad85bd932354c3d23697ff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df382caf205a1337bae792b70d44888b0d054d0f")]
 [assembly: System.Reflection.AssemblyProductAttribute("lab-7-pig-latin-JOSnow985")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lab-7-pig-latin-JOSnow985")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
