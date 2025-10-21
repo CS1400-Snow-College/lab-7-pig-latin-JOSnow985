@@ -46,3 +46,7 @@ foreach (string word in pigLatinArray)
     Console.Write(word + " ");
 }
 Console.WriteLine();
+
+Random rng = new Random();
+int rngOffset = rng.Next(1, 26);
+Console.WriteLine("Randomly generated offset is: " + rngOffset);
