@@ -1,0 +1,1 @@
+﻿// Jaden Olvera, 10-21-25, Lab 7 - Pig Latin / Encoder
