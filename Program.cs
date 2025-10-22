@@ -4,7 +4,7 @@ Console.WriteLine("Welcome to a Pig Latin encoding program!");
 Console.WriteLine("You can input a phrase and we'll turn it into Pig Latin, then encrypt it with an offset!");
 Console.Write("Phrase to encode: ");
 
-//Take the user's phrase and divide it into an array
+//Take the user's phrase and split it into an array using ' ' as the delimiter
 string userPhrase = Console.ReadLine();
 string[] phraseArray = userPhrase.Split(' ');
 
@@ -36,32 +36,41 @@ if (punctuationToAdd != "")
 
 //Make a new array for Pig Latin so we aren't directly touching phraseArray
 string[] pigLatinArray = new string[phraseArray.Length];
-string vowels = "aeiou";
+string vowels = "aeiouy";
 for (int index = 0; index < phraseArray.Length; index++)
 {
     // Checking if the word in the phrase starts with a vowel
     // If it does, all we have to do is add "way" to the end of it
-    if (vowels.Contains(phraseArray[index][..1]) == true)
+    if (vowels.Contains(phraseArray[index][0]) == true && phraseArray[index][0] != 'y')
     {
         pigLatinArray[index] = $"{phraseArray[index]}way";
     }
     else
     {
+        bool foundVowel = false;
         for (int subIndex = 1; subIndex < phraseArray[index].Length; subIndex++)
         {
+            if (subIndex == 1 && phraseArray[index][0] == 'q' && phraseArray[index][1] == 'u')
+                subIndex = 2;
             //Need to find where the consonant cluster ends
             //So we find the first vowel in the word and rearrange it, adding "ay" on the end
             if (vowels.Contains(phraseArray[index].Substring(subIndex, 1)))
             {
-                //Concatenating a string together from the substring after the consonant cluster, the consonant cluster, then "ay"
+                //Concatenating the substring after the consonant cluster, the consonant cluster, then "ay"
                 //The compiler suggested using Concat and AsSpan for better memory usage
                 pigLatinArray[index] = string.Concat(
                     phraseArray[index].AsSpan()[subIndex..phraseArray[index].Length],
                     phraseArray[index].AsSpan(0, subIndex),
                     "ay");
+                foundVowel = true;
                 //Break after we find the first vowel and declare the encoded string 
                 break;
             }
+        }
+        //If the entire word was consonants, fallback to just adding ay
+        if (foundVowel == false)
+        {
+            pigLatinArray[index] = phraseArray[index] + "ay";
         }
     }
 }
@@ -93,6 +102,7 @@ if (punctuationToAdd != "")
     }
 }
 
+//Print our encoded phrases
 Console.Write("In Pig Latin: ");
 foreach (string word in pigLatinArray)
 {
